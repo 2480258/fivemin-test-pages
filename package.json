@@ -1,0 +1,12 @@
+{
+    "name": "nodejs-fivemin-test",
+    "version": "0.0.1",
+    "description": "",
+    "private": true,
+    "scripts": {
+      "start": "node src/app.js"
+    },
+    "dependencies": {
+      "node-static": "0.6.x"
+    }
+  }
