@@ -47,6 +47,33 @@ http.createServer(function (req, res) {
                 res.end(data);
             })
             break;
+        case '/referrerattributetest':
+            console.log('sending... /referrerattributetest')
+            res.writeHead(200, { 'Content-Type': 'text/html' })
+            res.write('<html><body><a href="/users" referrerpolicy="same-origin">users</a><a href="/abc" rel="noreferrer">abc</a></body></html>');
+            res.end();
+            break;
+
+        case '/referrermetatest':
+            console.log('sending... /referrermetatest')
+            res.writeHead(200, { 'Content-Type': 'text/html' })
+            res.write('<html><head><meta name="referrer" content="origin"></head><body><a href="/users" referrerpolicy="origin">users</a></body></html>');
+            res.end();
+            break;
+
+        case '/referrerheadertest':
+            console.log('sending... /referrerheadertest')
+            res.writeHead(200, { 'Content-Type': 'text/html', 'Referrer-Policy': 'no-referrer' })
+            res.write('<html><body><a href="/users" referrerpolicy="origin">users</a></body></html>');
+            res.end();
+            break;
+
+        case '/referrertest':
+            console.log('sending... /referrertest')
+            res.writeHead(200, { 'Content-Type': 'text/html' })
+            res.write('<html><body></body></html>');
+            res.end();
+            break;
 
         default:
             res.end()
