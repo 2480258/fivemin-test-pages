@@ -76,10 +76,40 @@ http.createServer(function (req, res) {
             break;
 
         default:
-            res.end()
+            if (res.url.substring(0, 11) == '/performance') {
+                performance(res.url, res)
+            }
+            else {
+                res.end()
+            }
+
+
             break;
     }
 
 }).listen(3000);
 
 console.log('Navigate to http://localhost:3000/.');
+
+function performance(fragment, res) {
+    //a.com/performance/1
+    //a.com/performance/1/1
+    //a.com/performance/1/1/1
+
+    console.log('performance testing: ' + fragment)
+    len = fragment.substring(12).split('/').length
+
+    res.writeHead(200, { 'Content-Type': 'text/html' })
+    res.write('<html><body>')
+    if (len > 2) {
+
+    }
+    else {
+        for (var i = 0; i < 100; i++) {
+            res.write(`<a href="${fragment}/${i}">${fragment}/${i}</a>`)
+        }
+    }
+
+    res.write('</body></html>')
+    res.end()
+}
