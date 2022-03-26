@@ -1,6 +1,15 @@
 var http = require('http');
 var fs = require('fs');
 
+var text = ""
+
+fs.readFile("./public/performance-payload.txt", 'utf-8', function(err, data) {
+    if (err) throw err;
+    text = data
+  });
+
+
+
 http.createServer(function (req, res) {
     console.log('received')
     switch (req.url) {
@@ -76,8 +85,8 @@ http.createServer(function (req, res) {
             break;
 
         default:
-            if (res.url.substring(0, 11) == '/performance') {
-                performance(res.url, res)
+            if (req.url.toString().substring(0, 12) == '/performance') {
+                performance(req.url.toString(), res)
             }
             else {
                 res.end()
@@ -99,17 +108,18 @@ function performance(fragment, res) {
     console.log('performance testing: ' + fragment)
     len = fragment.substring(12).split('/').length
 
-    res.writeHead(200, { 'Content-Type': 'text/html' })
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
     res.write('<html><body>')
-    if (len > 2) {
+    if (len > 3) {
 
     }
     else {
         for (var i = 0; i < 100; i++) {
             res.write(`<a href="${fragment}/${i}">${fragment}/${i}</a>`)
         }
-    }
 
+    }
+    res.write(text)
     res.write('</body></html>')
     res.end()
 }
